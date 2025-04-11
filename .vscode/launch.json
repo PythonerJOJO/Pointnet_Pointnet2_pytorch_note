@@ -5,6 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "训练分类模型",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "--model",
+                "pointnet_cls",
+                "--use_normals",
+                "--log_dir",
+                // "pointnent2_cls_msg_normal_win01",
+                "pointnent_cls_win01",
+                "--batch_size",
+                "16"
+            ],
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}" // 确保能正确解析项目内的模块导入
+            }
+        },
+        {
             "name": "测试分类模型",
             "type": "debugpy",
             "request": "launch",

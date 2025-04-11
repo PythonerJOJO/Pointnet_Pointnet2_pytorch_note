@@ -7,6 +7,7 @@ python train_partseg.py --model pointnet2_part_seg_msg --normal --log_dir pointn
 
 import argparse
 import os
+from sympy import false
 import torch
 import datetime
 import logging
@@ -146,7 +147,8 @@ def main(args):
     log_string(args)  # 打印完整的参数配置
 
     """数据加载配置"""
-    root = "data/shapenetcore_partanno_segmentation_benchmark_v0_normal/"  # ShapeNet部件分割数据集路径
+    # root = "data/shapenetcore_partanno_segmentation_benchmark_v0_normal/"  # ShapeNet部件分割数据集路径
+    root = "d:/0_study_test/AI/point_cloud/data/shapenetcore_partanno_segmentation_benchmark_v0_normal/"  # ShapeNet部件分割数据集路径
 
     # 初始化数据加载器
     TRAIN_DATASET = PartNormalDataset(
@@ -202,7 +204,9 @@ def main(args):
     best_instance_avg_iou = 0.0
     start_epoch = 0
     try:
-        checkpoint = torch.load(checkpoints_dir / "best_model.pth")
+        # TODO: torch 2.6 改了load方法
+        # checkpoint = torch.load(checkpoints_dir / "best_model.pth")
+        checkpoint = torch.load(checkpoints_dir / "best_model.pth", weights_only=False)
         start_epoch = checkpoint["epoch"]
         classifier.load_state_dict(checkpoint["model_state_dict"])
         log_string("加载预训练模型成功")
@@ -231,6 +235,7 @@ def main(args):
     MOMENTUM_DECAY_STEP = args.step_size  # BN动量衰减步长
 
     """训练主循环"""
+    # bn_momentum_adjust = 0
     for epoch in range(start_epoch, args.epoch):
         mean_correct = []  # 存储每个批次的实例准确率
 

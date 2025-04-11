@@ -31,9 +31,10 @@ def parse_args():
         "--use_cpu", action="store_true", default=False, help="使用CPU模式"
     )
     parser.add_argument("--gpu", type=str, default="0", help='指定GPU设备（如"0,1"）')
-    parser.add_argument("--batch_size", type=int, default=24, help="训练时的批量大小")
+    # parser.add_argument("--batch_size", type=int, default=24, help="训练时的批量大小")
+    parser.add_argument("--batch_size", type=int, default=16, help="训练时的批量大小")
     parser.add_argument(
-        "--model", default="pointnet_cls", help="模型名称 [默认: pointnet_cls]"
+        "--model", default="pointnet_cls_msg", help="模型名称 [默认: pointnet_cls]"
     )
     parser.add_argument(
         "--num_category",
@@ -187,7 +188,8 @@ def main(args):
     """数据加载配置"""
     log_string("加载数据集...")
     # data_path = 'data/modelnet40_normal_resampled/'  # ModelNet数据集路径
-    data_path = "/home/dai/study_test/ai/data/modelnet40_normal_resampled/"  # ModelNet数据集路径
+    # data_path = "/home/dai/study_test/ai/data/modelnet40_normal_resampled/"  # ModelNet数据集路径
+    data_path = "D:/0_study_test/AI/point_cloud/data/modelnet40_normal_resampled/"  # ModelNet数据集路径
 
     # 初始化数据加载器
     train_dataset = ModelNetDataLoader(
@@ -210,7 +212,7 @@ def main(args):
     """模型加载与初始化"""
     num_class = args.num_category
     model_module = importlib.import_module(
-        args.model
+        args.model  # 自动搜索 'pointnet2_cls_msg'
     )  # 动态导入模型模块（如pointnet_cls）
 
     # 保存代码副本到实验目录（方便复现）
@@ -219,7 +221,9 @@ def main(args):
     shutil.copy("./train_classification.py", exp_dir)
 
     # 初始化模型和损失函数
+    # classifier 分类模型
     classifier = model_module.get_model(num_class, normal_channel=args.use_normals)
+
     criterion = model_module.get_loss()  # 获取模型对应的损失函数（如带正则项的交叉熵）
     classifier.apply(inplace_relu)  # 应用inplace_relu函数优化内存
 
@@ -282,7 +286,7 @@ def main(args):
             points[:, :, 0:3] = provider.shift_point_cloud(
                 points[:, :, 0:3]
             )  # 随机平移坐标
-            points = torch.Tensor(points)
+            points = torch.Tensor(points)  # shape(batchsize,1024,6)
             points = points.transpose(2, 1)  # 调整维度为(B, C, N)
 
             # 数据设备转移
