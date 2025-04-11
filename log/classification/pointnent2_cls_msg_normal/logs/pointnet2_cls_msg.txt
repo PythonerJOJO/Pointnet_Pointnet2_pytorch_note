@@ -1,0 +1,188 @@
+2025-04-11 10:54:08,844 - ModelTraining - INFO - 参数配置信息...
+2025-04-11 10:54:08,844 - ModelTraining - INFO - Namespace(use_cpu=False, gpu='0', batch_size=24, model='pointnet2_cls_msg', num_category=40, epoch=200, learning_rate=0.001, num_point=1024, optimizer='Adam', log_dir='pointnent2_cls_msg_normal', decay_rate=0.0001, use_normals=True, process_data=False, use_uniform_sample=False)
+2025-04-11 10:54:08,844 - ModelTraining - INFO - 加载数据集...
+2025-04-11 10:54:09,001 - ModelTraining - INFO - 未找到预训练模型，从0开始训练...
+2025-04-11 10:54:09,962 - ModelTraining - INFO - 开始训练...
+2025-04-11 10:55:10,561 - ModelTraining - INFO - 参数配置信息...
+2025-04-11 10:55:10,561 - ModelTraining - INFO - Namespace(use_cpu=False, gpu='0', batch_size=24, model='pointnet2_cls_msg', num_category=40, epoch=200, learning_rate=0.001, num_point=1024, optimizer='Adam', log_dir='pointnent2_cls_msg_normal', decay_rate=0.0001, use_normals=True, process_data=False, use_uniform_sample=False)
+2025-04-11 10:55:10,561 - ModelTraining - INFO - 加载数据集...
+2025-04-11 10:55:10,663 - ModelTraining - INFO - 未找到预训练模型，从0开始训练...
+2025-04-11 10:55:11,136 - ModelTraining - INFO - 开始训练...
+2025-04-11 10:57:14,121 - ModelTraining - INFO - 参数配置信息...
+2025-04-11 10:57:14,121 - ModelTraining - INFO - Namespace(use_cpu=False, gpu='0', batch_size=24, model='pointnet2_cls_msg', num_category=40, epoch=200, learning_rate=0.001, num_point=1024, optimizer='Adam', log_dir='pointnent2_cls_msg_normal', decay_rate=0.0001, use_normals=True, process_data=False, use_uniform_sample=False)
+2025-04-11 10:57:14,121 - ModelTraining - INFO - 加载数据集...
+2025-04-11 10:57:14,221 - ModelTraining - INFO - 未找到预训练模型，从0开始训练...
+2025-04-11 10:57:14,689 - ModelTraining - INFO - 开始训练...
+2025-04-11 10:57:14,689 - ModelTraining - INFO - 第 1 个epoch（共 200 个）:
+2025-04-11 10:57:35,507 - ModelTraining - INFO - 参数配置信息...
+2025-04-11 10:57:35,507 - ModelTraining - INFO - Namespace(use_cpu=False, gpu='0', batch_size=16, model='pointnet2_cls_msg', num_category=40, epoch=200, learning_rate=0.001, num_point=1024, optimizer='Adam', log_dir='pointnent2_cls_msg_normal', decay_rate=0.0001, use_normals=True, process_data=False, use_uniform_sample=False)
+2025-04-11 10:57:35,507 - ModelTraining - INFO - 加载数据集...
+2025-04-11 10:57:35,608 - ModelTraining - INFO - 未找到预训练模型，从0开始训练...
+2025-04-11 10:57:36,090 - ModelTraining - INFO - 开始训练...
+2025-04-11 10:57:36,090 - ModelTraining - INFO - 第 1 个epoch（共 200 个）:
+2025-04-11 10:59:18,368 - ModelTraining - INFO - 参数配置信息...
+2025-04-11 10:59:18,368 - ModelTraining - INFO - Namespace(use_cpu=False, gpu='0', batch_size=16, model='pointnet2_cls_msg', num_category=40, epoch=200, learning_rate=0.001, num_point=1024, optimizer='Adam', log_dir='pointnent2_cls_msg_normal', decay_rate=0.0001, use_normals=True, process_data=False, use_uniform_sample=False)
+2025-04-11 10:59:18,368 - ModelTraining - INFO - 加载数据集...
+2025-04-11 10:59:18,471 - ModelTraining - INFO - 未找到预训练模型，从0开始训练...
+2025-04-11 10:59:18,945 - ModelTraining - INFO - 开始训练...
+2025-04-11 10:59:18,945 - ModelTraining - INFO - 第 1 个epoch（共 200 个）:
+2025-04-11 11:02:53,101 - ModelTraining - INFO - 训练实例准确率: 0.545935
+2025-04-11 11:03:20,944 - ModelTraining - INFO - 测试实例准确率: 0.660887, 类别准确率: 0.566427
+2025-04-11 11:03:20,944 - ModelTraining - INFO - 最佳实例准确率: 0.660887, 类别准确率: 0.566427
+2025-04-11 11:03:20,944 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:03:20,972 - ModelTraining - INFO - 第 2 个epoch（共 200 个）:
+2025-04-11 11:06:57,141 - ModelTraining - INFO - 训练实例准确率: 0.698272
+2025-04-11 11:07:26,238 - ModelTraining - INFO - 测试实例准确率: 0.785081, 类别准确率: 0.697806
+2025-04-11 11:07:26,238 - ModelTraining - INFO - 最佳实例准确率: 0.785081, 类别准确率: 0.697806
+2025-04-11 11:07:26,238 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:07:26,308 - ModelTraining - INFO - 第 3 个epoch（共 200 个）:
+2025-04-11 11:10:57,865 - ModelTraining - INFO - 训练实例准确率: 0.748171
+2025-04-11 11:11:25,509 - ModelTraining - INFO - 测试实例准确率: 0.820565, 类别准确率: 0.719313
+2025-04-11 11:11:25,509 - ModelTraining - INFO - 最佳实例准确率: 0.820565, 类别准确率: 0.719313
+2025-04-11 11:11:25,509 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:11:25,575 - ModelTraining - INFO - 第 4 个epoch（共 200 个）:
+2025-04-11 11:15:02,006 - ModelTraining - INFO - 训练实例准确率: 0.781606
+2025-04-11 11:15:29,858 - ModelTraining - INFO - 测试实例准确率: 0.808065, 类别准确率: 0.765115
+2025-04-11 11:15:29,858 - ModelTraining - INFO - 最佳实例准确率: 0.820565, 类别准确率: 0.765115
+2025-04-11 11:15:29,858 - ModelTraining - INFO - 第 5 个epoch（共 200 个）:
+2025-04-11 11:19:00,488 - ModelTraining - INFO - 训练实例准确率: 0.791565
+2025-04-11 11:19:28,216 - ModelTraining - INFO - 测试实例准确率: 0.843145, 类别准确率: 0.789901
+2025-04-11 11:19:28,216 - ModelTraining - INFO - 最佳实例准确率: 0.843145, 类别准确率: 0.789901
+2025-04-11 11:19:28,216 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:19:28,282 - ModelTraining - INFO - 第 6 个epoch（共 200 个）:
+2025-04-11 11:23:03,040 - ModelTraining - INFO - 训练实例准确率: 0.804980
+2025-04-11 11:23:32,128 - ModelTraining - INFO - 测试实例准确率: 0.849194, 类别准确率: 0.808701
+2025-04-11 11:23:32,128 - ModelTraining - INFO - 最佳实例准确率: 0.849194, 类别准确率: 0.808701
+2025-04-11 11:23:32,129 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:23:32,206 - ModelTraining - INFO - 第 7 个epoch（共 200 个）:
+2025-04-11 11:27:12,485 - ModelTraining - INFO - 训练实例准确率: 0.812907
+2025-04-11 11:27:40,296 - ModelTraining - INFO - 测试实例准确率: 0.846371, 类别准确率: 0.771908
+2025-04-11 11:27:40,296 - ModelTraining - INFO - 最佳实例准确率: 0.849194, 类别准确率: 0.808701
+2025-04-11 11:27:40,296 - ModelTraining - INFO - 第 8 个epoch（共 200 个）:
+2025-04-11 11:31:15,982 - ModelTraining - INFO - 训练实例准确率: 0.828150
+2025-04-11 11:31:43,609 - ModelTraining - INFO - 测试实例准确率: 0.862097, 类别准确率: 0.799715
+2025-04-11 11:31:43,609 - ModelTraining - INFO - 最佳实例准确率: 0.862097, 类别准确率: 0.808701
+2025-04-11 11:31:43,609 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:31:43,675 - ModelTraining - INFO - 第 9 个epoch（共 200 个）:
+2025-04-11 11:35:16,055 - ModelTraining - INFO - 训练实例准确率: 0.834553
+2025-04-11 11:35:44,100 - ModelTraining - INFO - 测试实例准确率: 0.856855, 类别准确率: 0.797801
+2025-04-11 11:35:44,101 - ModelTraining - INFO - 最佳实例准确率: 0.862097, 类别准确率: 0.808701
+2025-04-11 11:35:44,101 - ModelTraining - INFO - 第 10 个epoch（共 200 个）:
+2025-04-11 11:39:23,644 - ModelTraining - INFO - 训练实例准确率: 0.838821
+2025-04-11 11:39:52,391 - ModelTraining - INFO - 测试实例准确率: 0.885484, 类别准确率: 0.832849
+2025-04-11 11:39:52,391 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.832849
+2025-04-11 11:39:52,391 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 11:39:52,456 - ModelTraining - INFO - 第 11 个epoch（共 200 个）:
+2025-04-11 11:43:28,719 - ModelTraining - INFO - 训练实例准确率: 0.841057
+2025-04-11 11:43:56,924 - ModelTraining - INFO - 测试实例准确率: 0.852823, 类别准确率: 0.815419
+2025-04-11 11:43:56,924 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.832849
+2025-04-11 11:43:56,924 - ModelTraining - INFO - 第 12 个epoch（共 200 个）:
+2025-04-11 11:47:32,309 - ModelTraining - INFO - 训练实例准确率: 0.846341
+2025-04-11 11:48:00,074 - ModelTraining - INFO - 测试实例准确率: 0.884274, 类别准确率: 0.829529
+2025-04-11 11:48:00,074 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.832849
+2025-04-11 11:48:00,074 - ModelTraining - INFO - 第 13 个epoch（共 200 个）:
+2025-04-11 11:51:34,798 - ModelTraining - INFO - 训练实例准确率: 0.851931
+2025-04-11 11:52:02,390 - ModelTraining - INFO - 测试实例准确率: 0.876210, 类别准确率: 0.813301
+2025-04-11 11:52:02,390 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.832849
+2025-04-11 11:52:02,390 - ModelTraining - INFO - 第 14 个epoch（共 200 个）:
+2025-04-11 11:55:33,037 - ModelTraining - INFO - 训练实例准确率: 0.853354
+2025-04-11 11:56:00,706 - ModelTraining - INFO - 测试实例准确率: 0.877419, 类别准确率: 0.845796
+2025-04-11 11:56:00,706 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.845796
+2025-04-11 11:56:00,706 - ModelTraining - INFO - 第 15 个epoch（共 200 个）:
+2025-04-11 11:59:31,388 - ModelTraining - INFO - 训练实例准确率: 0.856098
+2025-04-11 11:59:58,888 - ModelTraining - INFO - 测试实例准确率: 0.878226, 类别准确率: 0.850502
+2025-04-11 11:59:58,889 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.850502
+2025-04-11 11:59:58,889 - ModelTraining - INFO - 第 16 个epoch（共 200 个）:
+2025-04-11 12:03:29,508 - ModelTraining - INFO - 训练实例准确率: 0.862500
+2025-04-11 12:03:57,174 - ModelTraining - INFO - 测试实例准确率: 0.875403, 类别准确率: 0.828644
+2025-04-11 12:03:57,174 - ModelTraining - INFO - 最佳实例准确率: 0.885484, 类别准确率: 0.850502
+2025-04-11 12:03:57,174 - ModelTraining - INFO - 第 17 个epoch（共 200 个）:
+2025-04-11 12:07:28,014 - ModelTraining - INFO - 训练实例准确率: 0.863618
+2025-04-11 12:07:55,762 - ModelTraining - INFO - 测试实例准确率: 0.890726, 类别准确率: 0.856439
+2025-04-11 12:07:55,762 - ModelTraining - INFO - 最佳实例准确率: 0.890726, 类别准确率: 0.856439
+2025-04-11 12:07:55,762 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:07:55,827 - ModelTraining - INFO - 第 18 个epoch（共 200 个）:
+2025-04-11 12:11:27,096 - ModelTraining - INFO - 训练实例准确率: 0.858943
+2025-04-11 12:11:54,811 - ModelTraining - INFO - 测试实例准确率: 0.891935, 类别准确率: 0.856153
+2025-04-11 12:11:54,811 - ModelTraining - INFO - 最佳实例准确率: 0.891935, 类别准确率: 0.856439
+2025-04-11 12:11:54,811 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:11:54,877 - ModelTraining - INFO - 第 19 个epoch（共 200 个）:
+2025-04-11 12:15:26,059 - ModelTraining - INFO - 训练实例准确率: 0.870427
+2025-04-11 12:15:53,732 - ModelTraining - INFO - 测试实例准确率: 0.905242, 类别准确率: 0.870956
+2025-04-11 12:15:53,732 - ModelTraining - INFO - 最佳实例准确率: 0.905242, 类别准确率: 0.870956
+2025-04-11 12:15:53,732 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:15:53,852 - ModelTraining - INFO - 第 20 个epoch（共 200 个）:
+2025-04-11 12:19:25,172 - ModelTraining - INFO - 训练实例准确率: 0.886484
+2025-04-11 12:19:52,953 - ModelTraining - INFO - 测试实例准确率: 0.906452, 类别准确率: 0.869414
+2025-04-11 12:19:52,953 - ModelTraining - INFO - 最佳实例准确率: 0.906452, 类别准确率: 0.870956
+2025-04-11 12:19:52,953 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:19:53,019 - ModelTraining - INFO - 第 21 个epoch（共 200 个）:
+2025-04-11 12:23:24,269 - ModelTraining - INFO - 训练实例准确率: 0.890650
+2025-04-11 12:23:51,935 - ModelTraining - INFO - 测试实例准确率: 0.909677, 类别准确率: 0.871190
+2025-04-11 12:23:51,935 - ModelTraining - INFO - 最佳实例准确率: 0.909677, 类别准确率: 0.871190
+2025-04-11 12:23:51,935 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:23:52,000 - ModelTraining - INFO - 第 22 个epoch（共 200 个）:
+2025-04-11 12:27:23,084 - ModelTraining - INFO - 训练实例准确率: 0.894614
+2025-04-11 12:27:50,836 - ModelTraining - INFO - 测试实例准确率: 0.913710, 类别准确率: 0.879979
+2025-04-11 12:27:50,836 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.879979
+2025-04-11 12:27:50,836 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:27:50,909 - ModelTraining - INFO - 第 23 个epoch（共 200 个）:
+2025-04-11 12:31:22,182 - ModelTraining - INFO - 训练实例准确率: 0.888211
+2025-04-11 12:31:49,871 - ModelTraining - INFO - 测试实例准确率: 0.906855, 类别准确率: 0.881322
+2025-04-11 12:31:49,871 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.881322
+2025-04-11 12:31:49,871 - ModelTraining - INFO - 第 24 个epoch（共 200 个）:
+2025-04-11 12:35:21,110 - ModelTraining - INFO - 训练实例准确率: 0.890346
+2025-04-11 12:35:48,796 - ModelTraining - INFO - 测试实例准确率: 0.905242, 类别准确率: 0.879537
+2025-04-11 12:35:48,796 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.881322
+2025-04-11 12:35:48,796 - ModelTraining - INFO - 第 25 个epoch（共 200 个）:
+2025-04-11 12:39:20,082 - ModelTraining - INFO - 训练实例准确率: 0.897459
+2025-04-11 12:39:47,888 - ModelTraining - INFO - 测试实例准确率: 0.904032, 类别准确率: 0.867191
+2025-04-11 12:39:47,888 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.881322
+2025-04-11 12:39:47,888 - ModelTraining - INFO - 第 26 个epoch（共 200 个）:
+2025-04-11 12:43:19,141 - ModelTraining - INFO - 训练实例准确率: 0.892073
+2025-04-11 12:43:46,839 - ModelTraining - INFO - 测试实例准确率: 0.906048, 类别准确率: 0.861832
+2025-04-11 12:43:46,839 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.881322
+2025-04-11 12:43:46,839 - ModelTraining - INFO - 第 27 个epoch（共 200 个）:
+2025-04-11 12:47:18,075 - ModelTraining - INFO - 训练实例准确率: 0.899593
+2025-04-11 12:47:45,834 - ModelTraining - INFO - 测试实例准确率: 0.906855, 类别准确率: 0.879103
+2025-04-11 12:47:45,834 - ModelTraining - INFO - 最佳实例准确率: 0.913710, 类别准确率: 0.881322
+2025-04-11 12:47:45,834 - ModelTraining - INFO - 第 28 个epoch（共 200 个）:
+2025-04-11 12:51:17,132 - ModelTraining - INFO - 训练实例准确率: 0.897663
+2025-04-11 12:51:44,951 - ModelTraining - INFO - 测试实例准确率: 0.914113, 类别准确率: 0.881240
+2025-04-11 12:51:44,951 - ModelTraining - INFO - 最佳实例准确率: 0.914113, 类别准确率: 0.881322
+2025-04-11 12:51:44,951 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:51:45,017 - ModelTraining - INFO - 第 29 个epoch（共 200 个）:
+2025-04-11 12:55:16,105 - ModelTraining - INFO - 训练实例准确率: 0.901829
+2025-04-11 12:55:43,804 - ModelTraining - INFO - 测试实例准确率: 0.917339, 类别准确率: 0.882394
+2025-04-11 12:55:43,804 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.882394
+2025-04-11 12:55:43,804 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 12:55:43,870 - ModelTraining - INFO - 第 30 个epoch（共 200 个）:
+2025-04-11 12:59:19,097 - ModelTraining - INFO - 训练实例准确率: 0.897561
+2025-04-11 12:59:46,557 - ModelTraining - INFO - 测试实例准确率: 0.914919, 类别准确率: 0.884968
+2025-04-11 12:59:46,557 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.884968
+2025-04-11 12:59:46,557 - ModelTraining - INFO - 第 31 个epoch（共 200 个）:
+2025-04-11 13:03:18,690 - ModelTraining - INFO - 训练实例准确率: 0.898984
+2025-04-11 13:03:46,228 - ModelTraining - INFO - 测试实例准确率: 0.915726, 类别准确率: 0.881229
+2025-04-11 13:03:46,228 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.884968
+2025-04-11 13:03:46,228 - ModelTraining - INFO - 第 32 个epoch（共 200 个）:
+2025-04-11 13:07:21,547 - ModelTraining - INFO - 训练实例准确率: 0.901626
+2025-04-11 13:07:49,692 - ModelTraining - INFO - 测试实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:07:49,692 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:07:49,693 - ModelTraining - INFO - 保存模型到 log/classification/pointnent2_cls_msg_normal/checkpoints/best_model.pth
+2025-04-11 13:07:49,759 - ModelTraining - INFO - 第 33 个epoch（共 200 个）:
+2025-04-11 13:11:23,784 - ModelTraining - INFO - 训练实例准确率: 0.908740
+2025-04-11 13:11:53,830 - ModelTraining - INFO - 测试实例准确率: 0.915323, 类别准确率: 0.878919
+2025-04-11 13:11:53,830 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:11:53,830 - ModelTraining - INFO - 第 34 个epoch（共 200 个）:
+2025-04-11 13:15:32,587 - ModelTraining - INFO - 训练实例准确率: 0.901728
+2025-04-11 13:16:00,942 - ModelTraining - INFO - 测试实例准确率: 0.908871, 类别准确率: 0.869403
+2025-04-11 13:16:00,942 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:16:00,942 - ModelTraining - INFO - 第 35 个epoch（共 200 个）:
+2025-04-11 13:19:37,806 - ModelTraining - INFO - 训练实例准确率: 0.904980
+2025-04-11 13:20:05,549 - ModelTraining - INFO - 测试实例准确率: 0.906048, 类别准确率: 0.870945
+2025-04-11 13:20:05,549 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:20:05,549 - ModelTraining - INFO - 第 36 个epoch（共 200 个）:
+2025-04-11 13:23:40,338 - ModelTraining - INFO - 训练实例准确率: 0.907012
+2025-04-11 13:24:08,002 - ModelTraining - INFO - 测试实例准确率: 0.907258, 类别准确率: 0.883080
+2025-04-11 13:24:08,002 - ModelTraining - INFO - 最佳实例准确率: 0.917339, 类别准确率: 0.885325
+2025-04-11 13:24:08,003 - ModelTraining - INFO - 第 37 个epoch（共 200 个）:
