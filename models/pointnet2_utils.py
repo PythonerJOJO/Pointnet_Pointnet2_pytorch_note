@@ -12,8 +12,8 @@ def timeit(tag, t):
 
 def pc_normalize(pc):
     l = pc.shape[0]
-    centroid = np.mean(pc, axis=0)
-    pc = pc - centroid
+    质心 = np.mean(pc, axis=0)
+    pc = pc - 质心
     m = np.max(np.sqrt(np.sum(pc**2, axis=1)))
     pc = pc / m
     return pc
@@ -21,7 +21,7 @@ def pc_normalize(pc):
 
 def square_distance(src, dst):
     """
-    Calculate Euclid distance between each two points.
+    计算每两个点之间的欧几里得距离。
 
     src^T * dst = xn * xm + yn * ym + zn * zm；
     sum(src^2, dim=-1) = xn*xn + yn*yn + zn*zn;
@@ -29,11 +29,11 @@ def square_distance(src, dst):
     dist = (xn - xm)^2 + (yn - ym)^2 + (zn - zm)^2
          = sum(src**2,dim=-1)+sum(dst**2,dim=-1)-2*src^T*dst
 
-    Input:
-        src: source points, [B, N, C]
-        dst: target points, [B, M, C]
-    Output:
-        dist: per-point square distance, [B, N, M]
+    输入:
+        src: 源点，[B, N, C]
+        dst: 目标点，[B, M, C]
+    输出:
+        dist: 每个点的平方距离，[B, N, M]
     """
     B, N, _ = src.shape
     _, M, _ = dst.shape
@@ -46,11 +46,11 @@ def square_distance(src, dst):
 def index_points(points, idx):
     """
 
-    Input:
-        points: input points data, [B, N, C]
-        idx: sample index data, [B, S]
-    Return:
-        new_points:, indexed points data, [B, S, C]
+    输入:
+        points: 输入点数据，[B, N, C]
+        idx: 采样索引数据，[B, S]
+    返回:
+        new_points: 索引后的点数据，[B, S, C]
     """
     device = points.device
     B = points.shape[0]
@@ -70,11 +70,11 @@ def index_points(points, idx):
 
 def farthest_point_sample(xyz, npoint):
     """
-    Input:
-        xyz: pointcloud data, [B, N, 3]
-        npoint: number of samples
-    Return:
-        centroids: sampled pointcloud index, [B, npoint]
+    输入:
+        xyz: 点云数据，[B, N, 3]
+        npoint: 采样点数量
+    返回:
+        centroids: 采样点云索引，[B, npoint]
     """
     device = xyz.device
     B, N, C = xyz.shape
@@ -94,13 +94,13 @@ def farthest_point_sample(xyz, npoint):
 
 def query_ball_point(radius, nsample, xyz, new_xyz):
     """
-    Input:
-        radius: local region radius
-        nsample: max sample number in local region
-        xyz: all points, [B, N, 3]
-        new_xyz: query points, [B, S, 3]
-    Return:
-        group_idx: grouped points index, [B, S, nsample]
+    输入:
+        radius: 局部区域半径
+        nsample: 局部区域内的最大采样数量
+        xyz: 所有点，[B, N, 3]
+        new_xyz: 查询点，[B, S, 3]
+    返回:
+        group_idx: 分组点索引，[B, S, nsample]
     """
     device = xyz.device
     B, N, C = xyz.shape
@@ -119,15 +119,15 @@ def query_ball_point(radius, nsample, xyz, new_xyz):
 
 def sample_and_group(npoint, radius, nsample, xyz, points, returnfps=False):
     """
-    Input:
+    输入:
         npoint:
         radius:
         nsample:
-        xyz: input points position data, [B, N, 3]
-        points: input points data, [B, N, D]
-    Return:
-        new_xyz: sampled points position data, [B, npoint, nsample, 3]
-        new_points: sampled points data, [B, npoint, nsample, 3+D]
+        xyz: 输入点位置数据，[B, N, 3]
+        points: 输入点数据，[B, N, D]
+    返回:
+        new_xyz: 采样点位置数据，[B, npoint, nsample, 3]
+        new_points: 采样点数据，[B, npoint, nsample, 3+D]
     """
     B, N, C = xyz.shape
     S = npoint
@@ -152,12 +152,12 @@ def sample_and_group(npoint, radius, nsample, xyz, points, returnfps=False):
 
 def sample_and_group_all(xyz, points):
     """
-    Input:
-        xyz: input points position data, [B, N, 3]
-        points: input points data, [B, N, D]
-    Return:
-        new_xyz: sampled points position data, [B, 1, 3]
-        new_points: sampled points data, [B, 1, N, 3+D]
+    输入:
+        xyz: 输入点位置数据，[B, N, 3]
+        points: 输入点数据，[B, N, D]
+    返回:
+        new_xyz: 采样点位置数据，[B, 1, 3]
+        new_points: 采样点数据，[B, 1, N, 3+D]
     """
     device = xyz.device
     B, N, C = xyz.shape
@@ -187,12 +187,12 @@ class PointNetSetAbstraction(nn.Module):
 
     def forward(self, xyz, points):
         """
-        Input:
-            xyz: input points position data, [B, C, N]
-            points: input points data, [B, D, N]
-        Return:
-            new_xyz: sampled points position data, [B, C, S]
-            new_points_concat: sample points feature data, [B, D', S]
+        输入:
+            xyz: 输入点位置数据，[B, C, N]
+            points: 输入点数据，[B, D, N]
+        返回:
+            new_xyz: 采样点位置数据，[B, C, S]
+            new_points_concat: 采样点特征数据，[B, D', S]
         """
         xyz = xyz.permute(0, 2, 1)
         if points is not None:
@@ -204,8 +204,8 @@ class PointNetSetAbstraction(nn.Module):
             new_xyz, new_points = sample_and_group(
                 self.npoint, self.radius, self.nsample, xyz, points
             )
-        # new_xyz: sampled points position data, [B, npoint, C]
-        # new_points: sampled points data, [B, npoint, nsample, C+D]
+        # new_xyz: 采样点位置数据，[B, npoint, C]
+        # new_points: 采样点数据，[B, npoint, nsample, C+D]
         new_points = new_points.permute(0, 3, 2, 1)  # [B, C+D, nsample,npoint]
         for i, conv in enumerate(self.mlp_convs):
             bn = self.mlp_bns[i]
@@ -237,12 +237,12 @@ class PointNetSetAbstractionMsg(nn.Module):
 
     def forward(self, xyz, points):
         """
-        Input:
-            xyz: input points position data, [B, C, N]
-            points: input points data, [B, D, N]
-        Return:
-            new_xyz: sampled points position data, [B, C, S]
-            new_points_concat: sample points feature data, [B, D', S]
+        输入:
+            xyz: 输入点位置数据，[B, C, N]
+            points: 输入点数据，[B, D, N]
+        返回:
+            new_xyz: 采样点位置数据，[B, C, S]
+            new_points_concat: 采样点特征数据，[B, D', S]
         """
         xyz = xyz.permute(0, 2, 1)
         if points is not None:
@@ -289,13 +289,13 @@ class PointNetFeaturePropagation(nn.Module):
 
     def forward(self, xyz1, xyz2, points1, points2):
         """
-        Input:
-            xyz1: input points position data, [B, C, N]
-            xyz2: sampled input points position data, [B, C, S]
-            points1: input points data, [B, D, N]
-            points2: input points data, [B, D, S]
-        Return:
-            new_points: upsampled points data, [B, D', N]
+        输入:
+            xyz1: 输入点位置数据，[B, C, N]
+            xyz2: 采样后的输入点位置数据，[B, C, S]
+            points1: 输入点数据，[B, D, N]
+            points2: 输入点数据，[B, D, S]
+        返回:
+            new_points: 上采样后的点数据，[B, D', N]
         """
         xyz1 = xyz1.permute(0, 2, 1)
         xyz2 = xyz2.permute(0, 2, 1)
