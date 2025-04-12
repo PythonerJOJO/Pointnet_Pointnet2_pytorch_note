@@ -7,7 +7,16 @@ from pointnet_utils import STN3d, STNkd, feature_transform_reguliarzer
 
 
 class get_model(nn.Module):
-    def __init__(self, part_num=50, normal_channel=True):
+    """
+    部件分割模型没有用 PointNetEncoder，而是再次实现了另一个Encoder
+        因为功能更加复杂，因此输出的特征是 2048 而不是分类模型的 1024
+    """
+
+    def __init__(
+        self,
+        part_num=50,  # 部件的类别数量
+        normal_channel=True,
+    ):
         super(get_model, self).__init__()
         if normal_channel:
             channel = 6
@@ -25,7 +34,7 @@ class get_model(nn.Module):
         self.bn3 = nn.BatchNorm1d(128)
         self.bn4 = nn.BatchNorm1d(512)
         self.bn5 = nn.BatchNorm1d(2048)
-        self.fstn = STNkd(k=128)
+        self.fstn = STNkd(k=128)  # 维度 128，做特征变化的矩阵是 128*128
         self.convs1 = torch.nn.Conv1d(4944, 256, 1)
         self.convs2 = torch.nn.Conv1d(256, 256, 1)
         self.convs3 = torch.nn.Conv1d(256, 128, 1)
@@ -57,11 +66,14 @@ class get_model(nn.Module):
 
         out4 = F.relu(self.bn4(self.conv4(net_transformed)))
         out5 = self.bn5(self.conv5(out4))
+        # 全局池化后输出的是 2048 个元素
         out_max = torch.max(out5, 2, keepdim=True)[0]
-        out_max = out_max.view(-1, 2048)
+        out_max = out_max.view(-1, 2048)  # 展平
 
-        out_max = torch.cat([out_max,label.squeeze(1)],1)
-        expand = out_max.view(-1, 2048+16, 1).repeat(1, 1, N)
+        out_max = torch.cat([out_max, label.squeeze(1)], 1)
+        # 16个物体类别，2048是全局特征，+16 扩充所属类别
+        expand = out_max.view(-1, 2048 + 16, 1).repeat(1, 1, N)
+        # 做分割，要拼接 局部特征 和 全局特征
         concat = torch.cat([expand, out1, out2, out3, out4, out5], 1)
         net = F.relu(self.bns1(self.convs1(concat)))
         net = F.relu(self.bns2(self.convs2(net)))
@@ -69,7 +81,8 @@ class get_model(nn.Module):
         net = self.convs4(net)
         net = net.transpose(2, 1).contiguous()
         net = F.log_softmax(net.view(-1, self.part_num), dim=-1)
-        net = net.view(B, N, self.part_num) # [B, N, 50]
+        # N: 点云点数, 50: 部件数量
+        net = net.view(B, N, self.part_num)  # [B, N, 50]
 
         return net, trans_feat
 
@@ -80,7 +93,7 @@ class get_loss(torch.nn.Module):
         self.mat_diff_loss_scale = mat_diff_loss_scale
 
     def forward(self, pred, target, trans_feat):
-        loss = F.nll_loss(pred, target)
-        mat_diff_loss = feature_transform_reguliarzer(trans_feat)
+        loss = F.nll_loss(pred, target)  # 部件预测损失
+        mat_diff_loss = feature_transform_reguliarzer(trans_feat)  # 正则化损失
         total_loss = loss + mat_diff_loss * self.mat_diff_loss_scale
         return total_loss

@@ -5,7 +5,8 @@ from pointnet2_utils import PointNetSetAbstractionMsg, PointNetSetAbstraction
 
 class get_model(nn.Module):
     def __init__(self, num_class, normal_channel=True):
-        super(get_model, self).__init__()
+        # super(get_model, self).__init__()
+        super().__init__()
         in_channel = 3 if normal_channel else 0
         self.normal_channel = normal_channel
         self.sa1 = PointNetSetAbstractionMsg(
@@ -34,7 +35,7 @@ class get_model(nn.Module):
         self.fc3 = nn.Linear(256, num_class)
 
     def forward(self, xyz):
-        B, _, _ = xyz.shape
+        B, _, _ = xyz.shape  # xyz.shape(B,1024,6)
         if self.normal_channel:
             norm = xyz[:, 3:, :]
             xyz = xyz[:, :3, :]
@@ -54,7 +55,8 @@ class get_model(nn.Module):
 
 class get_loss(nn.Module):
     def __init__(self):
-        super(get_loss, self).__init__()
+        # super(get_loss, self).__init__()
+        super().__init__()
 
     def forward(self, pred, target, trans_feat):
         total_loss = F.nll_loss(pred, target)

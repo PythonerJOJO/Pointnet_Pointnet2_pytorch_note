@@ -12,11 +12,11 @@
             "console": "integratedTerminal",
             "args": [
                 "--model",
-                "pointnet_cls",
+                "pointnet2_cls_msg",
                 "--use_normals",
                 "--log_dir",
-                // "pointnent2_cls_msg_normal_win01",
-                "pointnent_cls_win01",
+                "pointnent2_cls_msg_normal_win01",
+                // "pointnent_cls_win01",
                 "--batch_size",
                 "16"
             ],

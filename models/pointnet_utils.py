@@ -124,7 +124,12 @@ class PointNetEncoder(nn.Module):
         捕捉不同层次的几何结构
     """
 
-    def __init__(self, global_feat=True, feature_transform=False, channel=3):
+    def __init__(
+        self,
+        global_feat=True,  # 只返回全局特征
+        feature_transform=False,
+        channel=3,
+    ):
         super(PointNetEncoder, self).__init__()
         self.stn = STN3d(channel)  # 坐标变换
         # 使用 1D 卷积 (核大小为 1) 等价于对每个点进行全连接变换,满足 “无序性” 要求

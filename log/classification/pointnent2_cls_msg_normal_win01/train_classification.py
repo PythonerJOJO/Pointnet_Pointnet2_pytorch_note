@@ -286,7 +286,7 @@ def main(args):
             points[:, :, 0:3] = provider.shift_point_cloud(
                 points[:, :, 0:3]
             )  # 随机平移坐标
-            points = torch.Tensor(points)
+            points = torch.Tensor(points)  # shape(batchsize,1024,6)
             points = points.transpose(2, 1)  # 调整维度为(B, C, N)
 
             # 数据设备转移

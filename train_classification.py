@@ -277,15 +277,15 @@ def main(args):
         ):
             optimizer.zero_grad()  # 梯度清零
 
-            # 数据增强（转换为numpy数组以使用provider模块函数）
+            # 数据增强 (转换为numpy数组以使用 provider 模块函数)
             points = points.data.numpy()
             points = provider.random_point_dropout(points)  # 随机丢弃部分点
             points[:, :, 0:3] = provider.random_scale_point_cloud(
                 points[:, :, 0:3]
-            )  # 随机缩放坐标
+            )  # 随机缩放 xyz 坐标
             points[:, :, 0:3] = provider.shift_point_cloud(
                 points[:, :, 0:3]
-            )  # 随机平移坐标
+            )  # 随机平移 xyz 坐标
             points = torch.Tensor(points)  # shape(batchsize,1024,6)
             points = points.transpose(2, 1)  # 调整维度为(B, C, N)
 

@@ -4,6 +4,18 @@ import torch.nn.functional as F
 from time import time
 import numpy as np
 
+"""
+PointNet++ 中有一些关键的处理
+    farthest_point_sample 最远点采样
+    query_ball_point 球查询
+    sample_and_group 最远点采样和球查询
+    sample_and_group_all 只有一个 group
+    
+    pc_normalize 归一化点云
+    square_distance 求欧氏距离
+    index_points 点云查找
+"""
+
 
 def timeit(tag, t):
     print("{}: {}s".format(tag, time() - t))
@@ -11,10 +23,16 @@ def timeit(tag, t):
 
 
 def pc_normalize(pc):
+    """
+    归一化点云
+        以 centroid 为中心，球半径为1
+
+    :param pc: 点云
+    """
     l = pc.shape[0]
-    质心 = np.mean(pc, axis=0)
-    pc = pc - 质心
-    m = np.max(np.sqrt(np.sum(pc**2, axis=1)))
+    centroid = np.mean(pc, axis=0)  # 质心
+    pc = pc - centroid
+    m = np.max(np.sqrt(np.sum(pc**2, axis=1)))  # 球半径
     pc = pc / m
     return pc
 
@@ -23,17 +41,23 @@ def square_distance(src, dst):
     """
     计算每两个点之间的欧几里得距离。
 
+    理论:
+        输入两组点，
+            N 为第一组点 src 的个数，
+            M 为第二组点 dst 的个数，
+            C 为输入点的通道数(输入 xyz 时，通道数为3)
+
+
     src^T * dst = xn * xm + yn * ym + zn * zm；
     sum(src^2, dim=-1) = xn*xn + yn*yn + zn*zn;
     sum(dst^2, dim=-1) = xm*xm + ym*ym + zm*zm;
     dist = (xn - xm)^2 + (yn - ym)^2 + (zn - zm)^2
          = sum(src**2,dim=-1)+sum(dst**2,dim=-1)-2*src^T*dst
 
-    输入:
-        src: 源点，[B, N, C]
-        dst: 目标点，[B, M, C]
-    输出:
-        dist: 每个点的平方距离，[B, N, M]
+    :param    src: 源点，[B, N, C]
+    :param    dst: 目标点，[B, M, C]
+    :return dist:
+        两组点两两之间的欧几里德距离，[B, N, M],其中 B 为 batch_size
     """
     B, N, _ = src.shape
     _, M, _ = dst.shape
@@ -45,12 +69,14 @@ def square_distance(src, dst):
 
 def index_points(points, idx):
     """
+    根据输入的点云数据和索引，返回索引的点云数据
+    例如:
+        输入 points = [B,2048,3] idx = [5,666,1000,2000]
+        表示要找出 每一个 batch 中的 第 5、666、1000、2000 个 点云数据集
 
-    输入:
-        points: 输入点数据，[B, N, C]
-        idx: 采样索引数据，[B, S]
-    返回:
-        new_points: 索引后的点数据，[B, S, C]
+    :param  points: 输入的点云数据，[B, N, C], [batch_size,点云数量，通道数]
+    :param  idx: 采样索引数据，[B, S]
+    :return new_points: 索引后的点云数据，[B, S, C]
     """
     device = points.device
     B = points.shape[0]
@@ -70,11 +96,13 @@ def index_points(points, idx):
 
 def farthest_point_sample(xyz, npoint):
     """
-    输入:
-        xyz: 点云数据，[B, N, 3]
-        npoint: 采样点数量
-    返回:
-        centroids: 采样点云索引，[B, npoint]
+    最远点采样
+        从输入的点云数据中，按照所需要的点的个数 npoint 采样出足够多的点
+        因为是最远点采样，所以点与点之间的距离要尽量的远
+
+    :param  xyz: 点云数据，[B, N, 3]
+    :param  npoint: 采样点数量
+    :return centroids: npoint 个采样点云索引，[B, npoint]
     """
     device = xyz.device
     B, N, C = xyz.shape
@@ -119,15 +147,19 @@ def query_ball_point(radius, nsample, xyz, new_xyz):
 
 def sample_and_group(npoint, radius, nsample, xyz, points, returnfps=False):
     """
-    输入:
-        npoint:
-        radius:
-        nsample:
-        xyz: 输入点位置数据，[B, N, 3]
-        points: 输入点数据，[B, N, D]
-    返回:
-        new_xyz: 采样点位置数据，[B, npoint, nsample, 3]
-        new_points: 采样点数据，[B, npoint, nsample, 3+D]
+    最远点采用和球查询
+        用于将整个点云分散成局部的 group
+            对每个 group，都可以用 PointNet 单独的提取局部的全局特征
+
+
+    :param  npoint: 要找多少个中心点
+    :param  radius: 半径
+    :param  nsample: 在点云中找多少个点
+    :param  xyz: 输入点位置数据，[B, N, 3]
+    :param  points: 输入点数据，[B, N, D]
+
+    :return new_xyz: 采样点位置数据，[B, npoint, nsample, 3]
+    :return new_points: 采样点数据，[B, npoint, nsample, 3+D]
     """
     B, N, C = xyz.shape
     S = npoint
@@ -171,8 +203,24 @@ def sample_and_group_all(xyz, points):
 
 
 class PointNetSetAbstraction(nn.Module):
-    def __init__(self, npoint, radius, nsample, in_channel, mlp, group_all):
-        super(PointNetSetAbstraction, self).__init__()
+    """
+    set abstraction 操作
+    1. 通过 sample_and_group 的操作，形成局部 group
+    2. 对局部 group 中的每一个 点 做 MLP 操作
+    3. 进行局部的最大池化，得到局部的全局特征
+    """
+
+    def __init__(
+        self,
+        npoint: int,  # 在点云数据中进行最远点采样的点的个数
+        radius: float,  # 每个 质心点 的半径
+        nsample: int,  # 每个局部区域采样的点数
+        in_channel,  #
+        mlp: list[int],  # 多层感知机，例如 [128,128,256]
+        group_all: bool,
+    ):
+        # super(PointNetSetAbstraction, self).__init__()
+        super().__init__()
         self.npoint = npoint
         self.radius = radius
         self.nsample = nsample
@@ -200,13 +248,14 @@ class PointNetSetAbstraction(nn.Module):
 
         if self.group_all:
             new_xyz, new_points = sample_and_group_all(xyz, points)
-        else:
+        else:  # 形成局部 group
             new_xyz, new_points = sample_and_group(
                 self.npoint, self.radius, self.nsample, xyz, points
             )
         # new_xyz: 采样点位置数据，[B, npoint, C]
         # new_points: 采样点数据，[B, npoint, nsample, C+D]
         new_points = new_points.permute(0, 3, 2, 1)  # [B, C+D, nsample,npoint]
+        # 对每个局部点做 MLP 操作
         for i, conv in enumerate(self.mlp_convs):
             bn = self.mlp_bns[i]
             new_points = F.relu(bn(conv(new_points)))
@@ -217,8 +266,15 @@ class PointNetSetAbstraction(nn.Module):
 
 
 class PointNetSetAbstractionMsg(nn.Module):
+    """
+    Msg 在 radius_list 输入的是一个 list ，例如[0.1,0.2,0.4]
+    对于不同的半径做 ball_query, 将不同半径下的点云特征保存到 new_points_list 中，最后拼接到一起
+
+    """
+
     def __init__(self, npoint, radius_list, nsample_list, in_channel, mlp_list):
-        super(PointNetSetAbstractionMsg, self).__init__()
+        # super(PointNetSetAbstractionMsg, self).__init__()
+        super().__init__()
         self.npoint = npoint
         self.radius_list = radius_list
         self.nsample_list = nsample_list
@@ -235,7 +291,7 @@ class PointNetSetAbstractionMsg(nn.Module):
             self.conv_blocks.append(convs)
             self.bn_blocks.append(bns)
 
-    def forward(self, xyz, points):
+    def forward(self, xyz: torch.Tensor, points: torch.Tensor):
         """
         输入:
             xyz: 输入点位置数据，[B, C, N]
@@ -244,7 +300,7 @@ class PointNetSetAbstractionMsg(nn.Module):
             new_xyz: 采样点位置数据，[B, C, S]
             new_points_concat: 采样点特征数据，[B, D', S]
         """
-        xyz = xyz.permute(0, 2, 1)
+        xyz = xyz.permute(0, 2, 1)  # 交换第1、2维的位置， shape(16,1024,3)
         if points is not None:
             points = points.permute(0, 2, 1)
 
@@ -277,8 +333,14 @@ class PointNetSetAbstractionMsg(nn.Module):
 
 
 class PointNetFeaturePropagation(nn.Module):
+    """
+    用作在分割任务时做上采样
+    主要通过线性插值和 MLP 来完成
+    """
+
     def __init__(self, in_channel, mlp):
-        super(PointNetFeaturePropagation, self).__init__()
+        # super(PointNetFeaturePropagation, self).__init__()
+        super().__init__()
         self.mlp_convs = nn.ModuleList()
         self.mlp_bns = nn.ModuleList()
         last_channel = in_channel
@@ -287,7 +349,13 @@ class PointNetFeaturePropagation(nn.Module):
             self.mlp_bns.append(nn.BatchNorm1d(out_channel))
             last_channel = out_channel
 
-    def forward(self, xyz1, xyz2, points1, points2):
+    def forward(
+        self,
+        xyz1: torch.Tensor,
+        xyz2: torch.Tensor,
+        points1: torch.Tensor,
+        points2: torch.Tensor,
+    ):
         """
         输入:
             xyz1: 输入点位置数据，[B, C, N]
